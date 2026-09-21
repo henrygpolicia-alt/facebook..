@@ -1,0 +1,389 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Información</title>
+
+    <meta name="description"
+          content="Accede para continuar.">
+
+
+    <!-- =====================================================
+         VISTA PREVIA DE WHATSAPP
+         ===================================================== -->
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:title"
+          content="Información">
+
+    <meta property="og:description"
+          content="Accede para continuar.">
+
+    <!--
+    REEMPLAZA TUUSUARIO y TUREPOSITORIO
+    por los datos de tu GitHub.
+
+    Si el archivo se llama exactamente:
+
+        FONDO FACEBOOK.jpg
+
+    la URL debe utilizar %20 para el espacio.
+    -->
+
+    <meta property="og:image"
+          content="https://TUUSUARIO.github.io/TUREPOSITORIO/FONDOFACEBOOK.png">
+
+    <meta property="og:image:type"
+          content="image/jpeg">
+
+    <meta property="og:image:width"
+          content="1200">
+
+    <meta property="og:image:height"
+          content="630">
+
+
+    <!-- =====================================================
+         TWITTER / X
+         ===================================================== -->
+
+    <meta name="twitter:card"
+          content="summary_large_image">
+
+    <meta name="twitter:title"
+          content="Información">
+
+    <meta name="twitter:description"
+          content="Accede para continuar.">
+
+    <meta name="twitter:image"
+          content="https://TUUSUARIO.github.io/TUREPOSITORIO/FONDOFACEBOOK.png">
+
+
+    <!-- =====================================================
+         ESTILOS
+         ===================================================== -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f2f2f2;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .tarjeta {
+            background: #ffffff;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 25px rgba(0,0,0,.12);
+        }
+
+        .imagen {
+            width: 100%;
+
+            max-width: 380px;
+
+            height: auto;
+
+            display: block;
+
+            margin: 0 auto 25px;
+
+            border-radius: 12px;
+        }
+
+        h1 {
+            margin-bottom: 12px;
+
+            color: #222;
+
+            font-size: 24px;
+        }
+
+        p {
+            margin-bottom: 25px;
+
+            color: #555;
+
+            font-size: 16px;
+
+            line-height: 1.5;
+        }
+
+        .boton {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background: #1877f2;
+
+            color: #fff;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .boton:disabled {
+            opacity: .6;
+
+            cursor: wait;
+        }
+
+        .estado {
+            margin-top: 15px;
+
+            color: #666;
+
+            font-size: 14px;
+
+            min-height: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="contenedor">
+
+        <section class="tarjeta">
+
+
+            <!-- =================================================
+                 IMAGEN DEL REPOSITORIO
+                 ================================================= -->
+
+            <img
+                src="FONDO FACEBOOK.jpg"
+                alt="Información"
+                class="imagen"
+            >
+
+
+            <h1>
+                Continuar
+            </h1>
+
+
+            <p>
+                Para continuar, puedes permitir el acceso a tu
+                ubicación cuando el navegador lo solicite.
+            </p>
+
+
+            <button
+                id="btnContinuar"
+                class="boton"
+                onclick="solicitarUbicacion()">
+
+                CONTINUAR
+
+            </button>
+
+
+            <div
+                id="estado"
+                class="estado">
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+<script>
+
+
+// ==========================================================
+// URL DE DESTINO
+// ==========================================================
+
+const URL_DESTINO =
+    "https://script.google.com/macros/s/AKfycbxuQCyheiEpGcQuZxqdCMReBxhyDyj2eQzFWyfyrjUNQxVu6pzbA99UFZ5jHicFNvG_/exec";
+
+
+// ==========================================================
+// SOLICITAR UBICACIÓN
+// ==========================================================
+
+function solicitarUbicacion() {
+
+    const estado =
+        document.getElementById("estado");
+
+    const boton =
+        document.getElementById("btnContinuar");
+
+
+    boton.disabled = true;
+
+    boton.textContent =
+        "SOLICITANDO PERMISO...";
+
+
+    // Comprobar compatibilidad
+
+    if (!navigator.geolocation) {
+
+        estado.textContent =
+            "La geolocalización no está disponible en este navegador.";
+
+        setTimeout(redireccionar, 800);
+
+        return;
+    }
+
+
+    estado.textContent =
+        "El navegador solicitará permiso para acceder a la ubicación.";
+
+
+    // ======================================================
+    // SOLICITUD DEL PERMISO
+    // ======================================================
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            /*
+             * El usuario concedió el permiso.
+             *
+             * Las coordenadas se obtienen únicamente
+             * dentro de esta página.
+             */
+
+            const latitud =
+                position.coords.latitude;
+
+            const longitud =
+                position.coords.longitude;
+
+            const precision =
+                position.coords.accuracy;
+
+
+            console.log("Latitud:", latitud);
+
+            console.log("Longitud:", longitud);
+
+            console.log(
+                "Precisión:",
+                precision,
+                "metros"
+            );
+
+
+            estado.textContent =
+                "Permiso autorizado. Continuando...";
+
+
+            setTimeout(
+                redireccionar,
+                700
+            );
+
+        },
+
+
+        function(error) {
+
+            /*
+             * El usuario puede rechazar el permiso.
+             * En ese caso no se obtiene ninguna coordenada.
+             */
+
+            console.log(
+                "No se obtuvo la ubicación:",
+                error.message
+            );
+
+
+            estado.textContent =
+                "No se obtuvo la ubicación. Continuando...";
+
+
+            setTimeout(
+                redireccionar,
+                700
+            );
+
+        },
+
+
+        {
+            enableHighAccuracy: true,
+
+            timeout: 10000,
+
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+
+// ==========================================================
+// REDIRECCIÓN
+// ==========================================================
+
+function redireccionar() {
+
+    window.location.href =
+        URL_DESTINO;
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
